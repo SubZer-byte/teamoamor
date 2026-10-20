@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100910">
+  <title>Para Sol ❤️</title>
+  <style>
+    :root {
+      --bg: #100910;
+      --panel: rgba(39, 18, 34, .82);
+      --pink: #ff6fae;
+      --pink-light: #ffd2e5;
+      --text: #fff5fa;
+      --muted: #d5b9c8;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse at 15% 15%, rgba(119, 28, 83, .30), transparent 38%),
+        radial-gradient(ellipse at 85% 80%, rgba(93, 28, 80, .22), transparent 42%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 22px 14px;
+    }
+    .stars, .hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: #ffe2ef;
+      border-radius: 50%;
+      opacity: .45;
+      animation: twinkle 3s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { to { opacity: .12; transform: scale(.55); } }
+    .floating-heart {
+      position: absolute;
+      bottom: -40px;
+      color: var(--pink);
+      opacity: 0;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 0 9px rgba(255,111,174,.45));
+    }
+    @keyframes floatUp {
+      10% { opacity: .65; }
+      100% { transform: translateY(-115vh) rotate(28deg); opacity: 0; }
+    }
+    main {
+      width: min(100%, 680px);
+      position: relative;
+      z-index: 1;
+    }
+    .topline {
+      text-align: center;
+      color: var(--muted);
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin: 0 0 15px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 164, 203, .22);
+      box-shadow: 0 24px 80px rgba(0,0,0,.35), 0 0 45px rgba(255,70,150,.07);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: clamp(24px, 6vw, 48px);
+      text-align: center;
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: appear .65s ease both;
+    }
+    @keyframes appear { from { opacity: 0; transform: translateY(12px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .symbol {
+      font-size: 3rem;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 0 18px rgba(255,111,174,.45));
+    }
+    h1, h2 {
+      line-height: 1.15;
+      margin: 0 0 16px;
+      letter-spacing: -.035em;
+    }
+    h1 { font-size: clamp(2.1rem, 8vw, 3.7rem); }
+    h2 { font-size: clamp(1.7rem, 6vw, 2.55rem); }
+    .glow { color: var(--pink-light); text-shadow: 0 0 24px rgba(255,111,174,.26); }
+    p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1.04rem;
+      margin: 0 0 20px;
+      max-width: 48ch;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+      width: 100%;
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      min-height: 48px;
+    }
+    button:hover { transform: translateY(-2px); }
+    button:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+    .primary {
+      color: #2a0d1c;
+      background: linear-gradient(135deg, #ffd0e4, #ff6fae);
+      box-shadow: 0 8px 25px rgba(255,111,174,.22);
+    }
+    .secondary {
+      color: var(--pink-light);
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,180,212,.25);
+    }
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin: 20px 0 0;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 20px; background: #694258; transition: all .25s; }
+    .dot.active { width: 23px; background: var(--pink); }
+    .letter-wrap { width: 100%; margin: 10px 0 4px; }
+    .letter {
+      text-align: left;
+      border: 1px solid rgba(255,170,207,.25);
+      background: rgba(15,7,14,.45);
+      border-radius: 18px;
+      padding: 22px;
+      color: #ffe8f1;
+      line-height: 1.85;
+      white-space: pre-line;
+    }
+    .letter-sign { color: var(--pink-light); font-weight: 700; margin-top: 14px; }
+    .hidden { display: none !important; }
+    .big-heart {
+      font-size: clamp(4rem, 17vw, 7rem);
+      animation: heartbeat 1.15s ease-in-out infinite;
+      filter: drop-shadow(0 0 25px rgba(255,77,145,.55));
+    }
+    @keyframes heartbeat { 0%,100% { transform: scale(1); } 18% { transform: scale(1.1); } 32% { transform: scale(1); } 48% { transform: scale(1.07); } }
+    .tiny-note { font-size: .82rem; opacity: .8; margin-top: 18px; }
+    .celebrate { animation: appear .6s ease both; }
+    footer { text-align: center; color: #9e7c91; font-size: .78rem; margin-top: 18px; }
+    @media (max-width: 420px) {
+      body { padding: 14px 10px; }
+      .card { min-height: 440px; border-radius: 22px; padding: 25px 19px; }
+      p { font-size: .98rem; }
+      .buttons { flex-direction: column; }
+      .buttons button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <main>
+    <p class="topline">Una pequeña sorpresa para Sol ✦</p>
+    <section class="card" id="card" aria-live="polite">
+      <div class="symbol">🌙</div>
+      <h1>Hola, <span class="glow">mi bbita</span></h1>
+      <p>He preparado algo para ti. No es una sorpresa enorme, pero sí algo que viene de un lugar muy bonito: mi corazón.</p>
+      <div class="buttons">
+        <button class="primary" onclick="goTo(1)">Tengo curiosidad ❤️</button>
+      </div>
+      <div class="progress" aria-label="Paso 1 de 5">
+        <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </section>
+    <footer>Hecho con cariño, solo para ti ♡</footer>
+  </main>
+
+  <script>
+    // Puedes personalizar los textos de cada pantalla en este archivo.
+    const screens = [
+      null,
+      {
+        symbol: "✨",
+        title: "Hay personas que hacen especial un día normal",
+        text: "Y tú, Sol, tienes esa forma de hacer que una conversación sencilla se convierta en uno de mis momentos favoritos.",
+        button: "Sigue, mi amor 💗"
+      },
+      {
+        symbol: "🫶",
+        title: "Quiero que sepas algo",
+        text: "Me gusta conocerte, compartir momentos contigo y descubrir poquito a poco todo lo que te hace ser tú. No necesito que todo sea perfecto para que algo sea bonito.",
+        button: "Tengo algo más que decirte"
+      },
+      {
+        symbol: "💌",
+        title: "Te escribí una cartita",
+        text: "Porque hay cosas que a veces cuesta decir de golpe, y quería que pudieras leerlas con calma.",
+        button: "Abrir mi carta 💌",
+        letter: true
+      }
+    ];
+
+    const card = document.getElementById("card");
+    let current = 0;
+    const totalDots = 5;
+
+    function renderProgress(step) {
+      return '<div class="progress" aria-label="Paso ' + (step + 1) + ' de ' + totalDots + '">' +
+        Array.from({length: totalDots}, (_, i) => '<span class="dot ' + (i <= step ? 'active' : '') + '"></span>').join('') +
+        '</div>';
+    }
+
+    function goTo(step) {
+      current = step;
+      if (step >= 1 && step <= 3) {
+        const s = screens[step];
+        let extra = '';
+        if (s.letter) {
+          extra = '<div class="letter-wrap"><div class="letter">Amor:\n\nQuería hacerte algo original, algo único para mostrarte mi amor. Me hace muy feliz tenerte en mi vida y seguir creando momentos contigo aunque sea a distancia. Me gusta que, aunque haya esta distancia y no sea tan fácil, los dos nos amamos y queremos estar juntos, y todo eso quiero cuidarlo con cariño, paciencia y sinceridad.\n\nNo quiero prometerte que todo será perfecto, quiero demostrarte con mis acciones que lo que siento es de verdad. Gracias por ser tú y por formar parte de mis días y hacerlos más felices.\n\nTe amo muchísimo, mi niña 💙</div></div>';
+        }
+        card.innerHTML = '<div class="symbol">' + s.symbol + '</div><h2>' + s.title + '</h2><p>' + s.text + '</p>' + extra +
+          '<div class="buttons"><button class="primary" onclick="goTo(' + (step + 1) + ')">' + s.button + '</button></div>' + renderProgress(step);
+      } else if (step === 4) {
+        card.innerHTML = '<div class="symbol">🥹</div><h2>Y ahora sí, mi bbita…</h2><p>He guardado la pregunta más importante para el final. Respira, sonríe y pulsa cuando estés lista.</p><div class="buttons"><button class="primary" onclick="goTo(5)">Descubrir la pregunta 💗</button></div>' + renderProgress(step);
+      } else if (step === 5) {
+        card.innerHTML = '<div class="big-heart">❤️</div><h1>Sol, <span class="glow">¿quieres ser mi novia?</span></h1><p>Me haría muy feliz poder llamarte así y seguir construyendo algo bonito contigo.</p><div class="buttons"><button class="primary" onclick="yes()">SÍ, MI AMOR 💖</button><button class="secondary" onclick="maybe()">Déjame pensarlo 🥹</button></div><p class="tiny-note">No hay respuesta incorrecta. Quiero que sea algo que tú también quieras. ♡</p>' + renderProgress(step);
+      }
+      card.style.animation = "none";
+      void card.offsetWidth;
+      card.style.animation = "appear .65s ease both";
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
+    function maybe() {
+      card.innerHTML = '<div class="symbol">🥹💗</div><h2>Tómate tu tiempo, mi amor</h2><p>No tienes que responder por presión. Lo importante para mí es que puedas decirme lo que sientes de verdad.</p><div class="buttons"><button class="primary" onclick="goTo(5)">Volver a la pregunta</button></div>' + renderProgress(4);
+    }
+
+    function yes() {
+      card.innerHTML = '<div class="celebrate"><div class="big-heart">💖</div><h1>¡SÍÍÍ, MI BBITA!</h1><p>Esta sorpresa acaba aquí, pero nuestra historia puede seguir escribiéndose, poquito a poco. Gracias por hacerme tan feliz, Sol. ❤️</p><p class="glow">Con cariño, para mi amor.</p><button class="secondary" onclick="burstHearts()">Otra lluvia de corazones ✨</button></div>' + renderProgress(4);
+      burstHearts();
+    }
+
+    function burstHearts() {
+      const container = document.getElementById("hearts");
+      for (let i = 0; i < 24; i++) {
+        const h = document.createElement("span");
+        h.className = "floating-heart";
+        h.textContent = ["♥", "♡", "💗", "✨"][Math.floor(Math.random() * 4)];
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.fontSize = (14 + Math.random() * 24) + "px";
+        h.style.animationDuration = (3 + Math.random() * 3) + "s";
+        container.appendChild(h);
+        setTimeout(() => h.remove(), 6500);
+      }
+    }
+
+    // Estrellitas decorativas de fondo.
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 65; i++) {
+      const s = document.createElement("span");
+      s.className = "star";
+      s.style.left = Math.random() * 100 + "%";
+      s.style.top = Math.random() * 100 + "%";
+      s.style.animationDelay = Math.random() * 3 + "s";
+      stars.appendChild(s);
+    }
+    setInterval(() => {
+      if (document.visibilityState === "visible") {
+        const container = document.getElementById("hearts");
+        const h = document.createElement("span");
+        h.className = "floating-heart";
+        h.textContent = Math.random() > .5 ? "♡" : "♥";
+        h.style.left = (5 + Math.random() * 90) + "vw";
+        h.style.fontSize = (14 + Math.random() * 16) + "px";
+        h.style.animationDuration = (6 + Math.random() * 4) + "s";
+        container.appendChild(h);
+        setTimeout(() => h.remove(), 10500);
+      }
+    }, 1400);
+  </script>
+</body>
+</html>
